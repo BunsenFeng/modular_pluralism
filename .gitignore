@@ -1,7 +1,5 @@
 community_lm_msgs/*
 !community_lm_msgs/readme.md
-output/*
-!output/readme.md
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
