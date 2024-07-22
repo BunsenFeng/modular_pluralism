@@ -16,8 +16,8 @@ We provide 11 trained community LMs, 6 perspective-informed (default) and 5 cult
 
 | Domain    | Checkpoints | Data Source |
 | -------- | ------- | ------- |
-| Perspective  | [1](https://huggingface.co/bunsenfeng/mistral-news_l), [2](https://huggingface.co/bunsenfeng/mistral-news_c), [3](https://huggingface.co/bunsenfeng/mistral-news_r), [4](https://huggingface.co/bunsenfeng/mistral-reddit_l), [5](https://huggingface.co/bunsenfeng/mistral-reddit_c), [6](https://huggingface.co/bunsenfeng/mistral-reddit_r) | [paper](https://arxiv.org/abs/2404.15238) |
-| Culture | [1](https://huggingface.co/bunsenfeng/mistral-africa_culture), [2](https://huggingface.co/bunsenfeng/mistral-asia_culture), [3](https://huggingface.co/bunsenfeng/mistral-europe_culture), [4](https://huggingface.co/bunsenfeng/mistral-northamerica_culture), [5](https://huggingface.co/bunsenfeng/mistral-southamerica_culture) | [paper](https://arxiv.org/abs/2305.08283) |
+| Perspective  | [1](https://huggingface.co/bunsenfeng/mistral-news_l), [2](https://huggingface.co/bunsenfeng/mistral-news_c), [3](https://huggingface.co/bunsenfeng/mistral-news_r), [4](https://huggingface.co/bunsenfeng/mistral-reddit_l), [5](https://huggingface.co/bunsenfeng/mistral-reddit_c), [6](https://huggingface.co/bunsenfeng/mistral-reddit_r) | [paper](https://arxiv.org/abs/2305.08283) |
+| Culture | [1](https://huggingface.co/bunsenfeng/mistral-africa_culture), [2](https://huggingface.co/bunsenfeng/mistral-asia_culture), [3](https://huggingface.co/bunsenfeng/mistral-europe_culture), [4](https://huggingface.co/bunsenfeng/mistral-northamerica_culture), [5](https://huggingface.co/bunsenfeng/mistral-southamerica_culture) | [paper](https://arxiv.org/abs/2404.15238) |
 
 Run the following script to generate community LM msgs for a given task.
 
@@ -28,13 +28,13 @@ generate_community_lm_msg.py [-h] [-i INPUT] [-t TYPE] [-c CHECKPOINT]
 
 optional arguments:
   -i INPUT, --input INPUT
-                        input file name
+                        which input task file to use without ".json", see "input/" for file names
   -t TYPE, --type TYPE  type of operation: generate or probability
   -c CHECKPOINT, --checkpoint CHECKPOINT
                         checkpoint path
 ```
 
-By default you don't need to set `-c`: it will loop over all perspective-informed community LMs by default. If you set a specific checkpoint, it will generate msgs for that checkpoint and you can parallelize it across checkpoints.
+By default you don't need to set `-c`: it will loop over all perspective-informed community LMs. If you set a specific checkpoint, it will generate msgs for that checkpoint and you can parallelize it across checkpoints.
 
 `-i` and `-t` use the following settings: `(overton_test_valuekaleidoscope, generate)`, `(steerable_test_valuekaleidoscope, generate)`, `(steerable_test_opinionqa, probability)`, `(distributional_test_moralchoice, probability)`, `(distributional_test_globalopinionqa)`, representating the five tasks. The generated msgs will be in `community_lm_msgs/`. The `MoE` and `ours` methods require the community LM msgs for a given task to operate.
 
@@ -53,7 +53,7 @@ We provide the implementation of the three baselines (vanilla LLM, prompting, mo
                         portion of the data to use, 0-1
 ```
 
-For `-m`, we provide `{llama2_7b, llama2_13b, llama2_70b, llama3_8b, llama3_70b, gemma_7b, chatgpt}_{aligned, unaligned}` in `lm_utils.py` by default.
+For `-m`, we provide `{llama2_7b, llama2_13b, llama2_70b, llama3_8b, llama3_70b, gemma_7b, chatgpt}_{aligned, unaligned}` in `lm_utils.py` by default. Examples: `llama2_7b_unaligned` and `chatgpt_aligned`.
 
 `-i` and `-t` use the following settings: `(overton_test_valuekaleidoscope, generate)`, `(steerable_test_valuekaleidoscope, generate)`, `(steerable_test_opinionqa, probability)`, `(distributional_test_moralchoice, probability)`, `(distributional_test_globalopinionqa)`, representating the five tasks.
 
@@ -154,10 +154,10 @@ optional arguments:
   -o OUTPUT, --output OUTPUT
                         output file name
   -a ATTRIBUTE, --attribute ATTRIBUTE
-                        attribute to evaluate only, default None, e.g. "EDUCATION" for OpinionQA
+                        attribute to consider only, default None, e.g. "EDUCATION" for OpinionQA
 ```
 
-We employ the `Most likely correctness` metric for `(steerable_test_opinionqa, probability)` and `Average distance` for `(distributional_test_moralchoice, probability)` and `(distributional_test_globalopinionqa)`.
+We employ the `Most likely correctness` metric for `(steerable_test_opinionqa, probability)` and `Average distance` metric for `(distributional_test_moralchoice, probability)` and `(distributional_test_globalopinionqa)`.
 
 We provide example outputs in the `output/` directory.
 
