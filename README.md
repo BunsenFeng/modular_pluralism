@@ -1,6 +1,6 @@
 # Modular Pluralism Repository
 
-This is the official repo for [Modular Pluralism: Pluralistic Alignment via Multi-LLM Collaboration](https://arxiv.org/abs/2406.15951).
+This is the official repo for [Modular Pluralism: Pluralistic Alignment via Multi-LLM Collaboration](https://arxiv.org/abs/2406.15951) @ EMNLP 2024.
 
 ### Environment
 
